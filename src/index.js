@@ -2,4 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 
-ReactDOM.render('Hola React', document.body);
+ReactDOM.render(
+    <h1>Hola React</h1>, 
+    document.getElementById('app')
+);
