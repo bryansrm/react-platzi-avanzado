@@ -30,7 +30,8 @@ export const Button = styled.button`
     align-items: center;
     margin-top: 8px;
     background: none;
-    border: none;   
+    border: none;
+    outline: none;
     & svg {
         margin-right: 4px;
 
