@@ -1,4 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
+
+import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { useNearScreen } from '../../hooks/useNearScreen'
 
 import { Article, ImgWrapper, Img, Button } from './styles'
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
@@ -8,44 +11,10 @@ const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1452857297128-d9c29adba
 export const PhotoCard = ({ id, src = DEFAULT_IMAGE, likes = 0 }) => {
   
   const key= `like-${id}`
-  const ref = useRef(null)
-  const [ show, setShow ] = useState(false) 
-  const [ liked, setLiked ] = useState(() => {
-    try {
-      const like = window.localStorage.getItem(key)
-      return JSON.parse(like)
-    } catch (error) {
-      console.log(`error: ${error}`)
-    }
-  }) 
+  const [ liked, setLiked ] = useLocalStorage(key, false)
+  const [ show, ref ] = useNearScreen(key, false)
 
-  useEffect(() => {
-    Promise.resolve( typeof window.IntersectionObserver !== 'undefined' 
-      ? window.IntersectionObserver
-      : import('intersection-observer')
-    ).then(() => {
-      const observer = new window.IntersectionObserver( function(entries){
-        const { isIntersecting } = entries[0]
-        if( isIntersecting ){
-          setShow(true)
-          observer.disconnect()
-        }
-      })
-      observer.observe(ref.current)
-    })
-  }, [ref])
-
-  const Icon = liked ? MdFavorite : MdFavoriteBorder
-
-  const setLocalStorage = value => {
-    try{
-      window.localStorage.setItem(key, value)
-      setLiked(value)
-    }
-    catch(e){
-      console.error('Error: '+ e);
-    }
-  }
+  const Icon = liked ? MdFavorite : MdFavoriteBorder  
 
   return (
     <Article ref={ref}>
@@ -57,7 +26,7 @@ export const PhotoCard = ({ id, src = DEFAULT_IMAGE, likes = 0 }) => {
                 <Img src={src}/>
               </ImgWrapper>
             </a>
-            <Button onClick={() => setLocalStorage(!liked)}>
+            <Button onClick={() => setLiked(!liked)}>
               <Icon size="30"/> {likes}
             </Button>
           </>
