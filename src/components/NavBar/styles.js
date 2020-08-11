@@ -32,7 +32,7 @@ export const Link = styled(LinkRouter)`
     background-color: #efefef
   }
   &[aria-current]{
-    border-bottom: 3px solid #000;
+    border-bottom: 2px solid #000;
     color: black;
   }
 
