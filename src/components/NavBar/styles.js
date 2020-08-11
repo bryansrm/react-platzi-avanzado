@@ -31,5 +31,9 @@ export const Link = styled(LinkRouter)`
   &:hover{
     background-color: #efefef
   }
+  &[aria-current]{
+    border-bottom: 3px solid #000;
+    color: black;
+  }
 
 `
