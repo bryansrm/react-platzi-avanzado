@@ -1,10 +1,11 @@
 import React from 'react'
+import { Router } from '@reach/router'
 
 import { GlobalStyle } from './GlobalStyles'
 import { Logo } from './components/Logo/index'
 import { PhotoCardWithQuery } from './containers/PhotoCardWithQuery'
 import { Home } from './pages/Home'
-import { Router } from '@reach/router'
+import { NavBar} from './components/NavBar/index'
 
 export const App = () => {
   const urlParams = new window.URLSearchParams(window.location.search)
@@ -24,7 +25,9 @@ export const App = () => {
             <Home path="/" />
             <Home path="/pet/:id" />
           </Router>
+          
       }
+      <NavBar />
       
     </>
   )
